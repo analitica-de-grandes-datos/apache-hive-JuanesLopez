@@ -3,8 +3,8 @@
 Pregunta
 ===========================================================================
 
-Escriba una consulta que calcule la cantidad de registros por clave de la 
-columna 3. En otras palabras, cuántos registros hay que tengan la clave 
+Escriba una consulta que calcule la cantidad de registros por key de la 
+columna 3. En otras palabras, cuántos registros hay que tengan la key 
 `aaa`?
 
 Apache Hive se ejecutará en modo local (sin HDFS).
@@ -29,4 +29,9 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 /*
     >>> Escriba su respuesta a partir de este punto <<<
 */
-
+INSERT OVERWRITE DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT key, count(key)
+FROM t0 LATERAL VIEW explode(c3) adTable AS key, value
+GROUP BY key
+ORDER BY key;
