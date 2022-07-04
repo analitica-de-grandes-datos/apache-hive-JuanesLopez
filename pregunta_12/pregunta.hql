@@ -35,7 +35,7 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
 INSERT OVERWRITE DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT letter, key, count(*) AS count
+SELECT letter, key, count(*) AS rep
 FROM t0
 LATERAL VIEW explode(c2) adTable_1 AS letter
 LATERAL VIEW explode(c3) adTable_2 AS key, value

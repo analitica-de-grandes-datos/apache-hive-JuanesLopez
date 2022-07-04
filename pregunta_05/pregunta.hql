@@ -46,6 +46,6 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 */
 INSERT OVERWRITE DIRECTORY 'output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-SELECT year, letter, count(letter) FROM
-(SELECT year(c4) year, letter FROM tbl0 LATERAL VIEW explode(c5) adTable AS letter)
-GROUP BY year, letter ORDER BY year, letter;
+SELECT dateyear, letter, count(letter) FROM
+(SELECT year(c4) dateyear, letter FROM tbl0 LATERAL VIEW explode(c5) adTable AS letter) aux
+GROUP BY dateyear, letter ORDER BY dateyear, letter;
