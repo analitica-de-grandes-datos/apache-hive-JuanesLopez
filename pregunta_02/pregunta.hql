@@ -14,3 +14,14 @@ Escriba el resultado a la carpeta `output` de directorio de trabajo.
 */
 
 
+DROP TABLE IF EXISTS data;
+
+CREATE TABLE data (letter STRING, fecha DATE, number INT)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH "data.tsv" OVERWRITE INTO TABLE data;
+
+INSERT OVERWRITE DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT letter,fecha,number FROM data ORDER BY letter, number;
